@@ -1,0 +1,30 @@
+<h2 class="content-subhead">Search</h2>
+
+<form action="/search" method="get">
+  <input name="query" value="<%= params[:query] %>">
+  <button type="submit">Search</button>
+</form>
+<% if params[:query] %>
+  <% if @result_chapters.empty? %>
+    <p>Sorry, no matches were found.</p>
+  <% else %>
+    <h2 class="content-subhead">Results for '<%= params[:query] %>'</h2>
+    <ul>
+      <% @result_chapters.each do |result|%>
+        <li>
+          <h4><%= result[:chapter_name] %></h4>
+          </a>
+          <ul>
+            <% @result_paragraphs.each do |paragraph, count| %>
+              <li>
+                <a href="/chapters/<%= result[:chapter_number] %>#<%= count %>">
+                  <%= strong_query(paragraph) %>
+                </a>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
